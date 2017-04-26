@@ -31,4 +31,8 @@ sqoop  import --connect jdbc:mysql://localhost/useractive12  --username root --p
 --table user --hive-import --hive-overwrite\
     --hive-table database12.user --driver com.mysql.jdbc.Driver
 #execute sqoop job
+<<<<<<< HEAD
 sqoop job -exec activelog_load
+=======
+sqoop job -exec activelog_load
+>>>>>>> f8e1e5b6e739aad19f62c665f75e18d45661ec51
