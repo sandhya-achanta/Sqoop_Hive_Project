@@ -19,9 +19,9 @@ cp /home/cloudera/dump/bigfile.csv  /home/cloudera/user_upload_dump
 cd /home/cloudera
 #remove directory if exists
 hadoop dfs -rmr hdfs://quickstart.cloudera:8020/user/cloudera/user_upload_dump
-#copy file to HDFS
+#copy file Directory to HDFS
 hadoop fs -put /home/cloudera/user_upload_dump
-hadoop fs -cat  /user/cloudera/user_upload_dump14/bigfile.csv
+hadoop fs -cat  /user/cloudera/user_upload_dump/bigfile.csv
 hive -e "load data  inpath '/user/cloudera/user_upload_dump' into  table database12.user_upload_dump;"
 #remove user_upload_dump and dump directories
 rm -rf  /home/cloudera/user_upload_dump
@@ -31,4 +31,4 @@ sqoop  import --connect jdbc:mysql://localhost/useractive12  --username root --p
 --table user --hive-import --hive-overwrite\
     --hive-table database12.user --driver com.mysql.jdbc.Driver
 #execute sqoop job
-sqoop job -exec activelog3
+sqoop job -exec activelog_load
