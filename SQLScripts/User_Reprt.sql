@@ -1,3 +1,8 @@
+--create user_report table to load data
+CREATE TABLE IF NOT EXISTS user_report (user_id int,total_inserts int,total_updates int,
+total_deletes int,last_activity_type STRING,is_active BOOLEAN,upload_count int);
+--insert query to insert data
+insert into user_report
 SELECT user.id as user_id, 
 CASE WHEN s1.totinserts > 0 then s1.totinserts else 0 END as total_inserts,
 CASE WHEN s2.totupdates > 0 then s2.totupdates else 0 END as total_updates,
