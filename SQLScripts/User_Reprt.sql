@@ -18,7 +18,7 @@ left outer JOIN
 ON S2.user_id = user.id
 left outer JOIN
                 (SELECT  user_id,count(*) as totdeletes
-                 FROM  activitylog where type not ull and type = 'DELETE'
+                 FROM  activitylog where type not null and type = 'DELETE'
                  GROUP BY user_id) S3 
 ON S3.user_id = user.id 
 left outer JOIN (select a.user_id as user_id,b.type as type from (select Max(timestamp) ts,user_id from activitylog group by user_id) a, activitylog b where a.ts = b.timestamp and a.user_id = b.user_id ) S4 
