@@ -26,7 +26,12 @@ left outer JOIN
                  FROM  activitylog where  type = 'DELETE'
                  GROUP BY user_id) S3 
 ON S3.user_id = user.id 
-left outer JOIN (select a.user_id as user_id,b.type as type from (select Max(timestamp) ts,user_id from activitylog group by user_id) a, activitylog b where a.ts = b.timestamp and a.user_id = b.user_id ) S4 
+left outer JOIN (select t1.user_id as user_id ,type from activitylog t1
+join (
+  select user_id, max(timestamp) maxModified from activitylog
+  group by user_id
+) s
+on t1.user_id  = s.user_id and t1.timestamp = s.maxModified) S4 
 ON S4.user_id = user.id
 left outer JOIN (SELECT user_id,count(*) as active  FROM  activitylog  WHERE timestamp between ( unix_timestamp() -2*24*60*60) and unix_timestamp() group by user_id)S5 
 ON S5.user_id = user.id
