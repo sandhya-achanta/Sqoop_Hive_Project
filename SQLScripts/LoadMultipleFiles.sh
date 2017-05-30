@@ -3,16 +3,15 @@ cd /home/cloudera/user_upload_dump_dir
 for file in $(find . -type f -name "user_upload_dump.*")
 do
   echo "Processing $file file..."
-  # take action on each file. move each file to user_upload_dump
-  mv $file /home/cloudera/user_upload_dump
+  # take action on each file. 
   cd /home/cloudera/
   #create directory to be process
   mkdir /home/cloudera/user_upload_dump_WorkInProgress
   #create directory to stage processed file 
   mkdir /home/cloudera/user_upload_dump_loadedfiles
   cd /home/cloudera/user_upload_dump
-  #copy file to uer_upload_dump_WorkInProgress
-  cp  $file  /home/cloudera/user_upload_dump_WorkInProgress
+  #move each file to uer_upload_dump_WorkInProgress
+  mv  $file  /home/cloudera/user_upload_dump_WorkInProgress
   cd /home/cloudera
   #remove directory if exists
   hadoop dfs -rmr hdfs://quickstart.cloudera:8020/user/cloudera/user_upload_dump_WorkInProgress
