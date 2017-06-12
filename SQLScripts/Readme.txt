@@ -3,6 +3,5 @@ Step 1) sh Configuration.sh
 #run python script provided by Robert
 Step 2) run python script provided by Robert sanders
 # to do ingestion run below command
-Step 3) sh LoadMultipleFiles.sh
-# when load completed verify data
-Step 4) run user_reprt.sql and user_Total.sql 
+Step 3) sh LoadMultipleFiles.sh : loads data into Hive tables and summarizes data for the future reports such as 
+User_Report and User Total.
