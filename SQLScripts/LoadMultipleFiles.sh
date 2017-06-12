@@ -33,10 +33,9 @@ sqoop  import --connect jdbc:mysql://localhost/user_active_log --username root -
 #execute sqoop job
 sqoop job -exec activity_log
 
-  hive -d --database user_active_dump
 
-hive -e "CREATE TABLE IF NOT EXISTS user_active_dump.user_report (user_id int,total_inserts int,total_updates int,
-total_deletes int,last_activity_type STRING,is_active BOOLEAN,upload_count int);"
+# autoating user_report table
+  hive -d --database user_active_dump
 hive -e "insert OVERWRITE TABLE user_active_dump.user_report
 SELECT user.id as user_id, 
 CASE WHEN s1.totinserts > 0 then s1.totinserts else 0 END as total_inserts,
@@ -74,9 +73,7 @@ left outer JOIN (select user_id,count(*) as upload_count from user_active_dump.u
 ON S6.user_id = user.id;"
 
    # User Total Automation
-
 hive -d --database user_active_dump
-hive -e "CREATE TABLE IF NOT EXISTS user_active_dump.user_total (time_ran timestamp,total_users int,users_added int);"
 hive -e "use user_active_dump;insert into user_total
 select a.ts,a.total,case when (a.total-b.difflastrun) is null then 0 else (a.total-b.difflastrun) end 
 from (SELECT from_unixtime(unix_timestamp()) as ts,count(*) as total from user) a,
