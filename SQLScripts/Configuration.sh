@@ -7,7 +7,7 @@ hadoop fs -put  /home/cloudera/password  /user/cloudera/sqoop_passwordfile
 #create database in Hive
 hive -e "create database user_active_dump"
 #create hive table user_upload_dump
-hive -e "'CREATE TABLE IF NOT EXISTS user_upload_dump(
+hive -e "'CREATE TABLE IF NOT EXISTS user_active_dump.user_upload_dump(
     user_id int, 
     filename STRING, ts int)
     ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
