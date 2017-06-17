@@ -35,8 +35,7 @@ sqoop job -exec activity_log
 
 
 # autoating user_report table
-  hive -d --database user_active_dump
-hive -e "insert OVERWRITE TABLE user_active_dump.user_report
+  hive -e "insert OVERWRITE TABLE user_active_dump.user_report
 SELECT user.id as user_id, 
 CASE WHEN s1.totinserts > 0 then s1.totinserts else 0 END as total_inserts,
 CASE WHEN s2.totupdates > 0 then s2.totupdates else 0 END as total_updates,
@@ -73,11 +72,12 @@ left outer JOIN (select user_id,count(*) as upload_count from user_active_dump.u
 ON S6.user_id = user.id;"
 
    # User Total Automation
-hive -d --database user_active_dump
-hive -e "use user_active_dump;insert into user_total
-select a.ts,a.total,case when (a.total-b.difflastrun) is null then 0 else (a.total-b.difflastrun) end 
-from (SELECT from_unixtime(unix_timestamp()) as ts,count(*) as total from user) a,
-(select sum(total_users) as difflastrun from user_total 
-where time_ran > from_unixtime(unix_timestamp()))b;"
+hive -e "insert into user_active_dump.user_total
+> select a.ts,a.total,case when (a.total-b.difflastrun) is null then 0 else (a.total-b.difflastrun) end 
+> from (SELECT from_unixtime(unix_timestamp()) as ts,count(*) as total from user_active_dump.user) a,
+> (select sum(total_users) as difflastrun from user_active_dump.user_total 
+> where time_ran > from_unixtime(unix_timestamp()))b;"
+
+
 
                                                                                                                                                                                                          1,1           Top
